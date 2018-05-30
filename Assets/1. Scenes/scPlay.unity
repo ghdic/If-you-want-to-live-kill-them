@@ -198,7 +198,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4819057762112864, guid: 839f658809635d5448a4414f509c7701, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 90
+      value: 87.63
       objectReference: {fileID: 0}
     - target: {fileID: 4819057762112864, guid: 839f658809635d5448a4414f509c7701, type: 2}
       propertyPath: m_LocalPosition.z
@@ -229,6 +229,16 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 7b53210005e7e804891028514b4ab16f, type: 2}
+    - target: {fileID: 114828503297273514, guid: 839f658809635d5448a4414f509c7701,
+        type: 2}
+      propertyPath: backwardSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114828503297273514, guid: 839f658809635d5448a4414f509c7701,
+        type: 2}
+      propertyPath: standardPos
+      value: 
+      objectReference: {fileID: 1200128007}
     m_RemovedComponents:
     - {fileID: 114920100433734766, guid: 839f658809635d5448a4414f509c7701, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 839f658809635d5448a4414f509c7701, type: 2}
@@ -298,6 +308,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 33.2, y: -53.464, z: -1.9920001}
+--- !u!4 &1200128007 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4958015224781728, guid: 839f658809635d5448a4414f509c7701,
+    type: 2}
+  m_PrefabInternal: {fileID: 925789002}
 --- !u!1001 &1370497635
 Prefab:
   m_ObjectHideFlags: 0
@@ -336,6 +351,10 @@ Prefab:
     - target: {fileID: 4150248388256538, guid: b8004703b0388a543ac285b735f065d3, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637400910887344, guid: b8004703b0388a543ac285b735f065d3, type: 2}
+      propertyPath: m_TagString
+      value: MainCamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8004703b0388a543ac285b735f065d3, type: 2}

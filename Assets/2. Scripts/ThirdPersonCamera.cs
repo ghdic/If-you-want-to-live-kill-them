@@ -1,26 +1,23 @@
-﻿//
-// Unityちゃん用の三人称カメラ
-// 
-// 2013/06/07 N.Kobyasahi
-//
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-	public float smooth = 3f;		// カメラモーションのスムーズ化用変数
-	Transform standardPos;			// the usual position for the camera, specified by a transform in the game
-	Transform frontPos;			// Front Camera locater
-	Transform jumpPos;			// Jump Camera locater
-	
-	// スムーズに繋がない時（クイック切り替え）用のブーリアンフラグ
-	bool bQuickSwitch = false;	//Change Camera Position Quickly
+	public float smooth = 3f;		// 카메라 모션 부드럽게하기용 변수
+    Transform mainCamera;
+	Transform standardPos;			// 카메라의 일반적인 위치
+	Transform frontPos;			// 카메라 전면 탐지기
+	Transform jumpPos;          // 카메라 점프 표시용
+    Quaternion prevRot;          // 이전 각도 저장용
+	// 원활하게 연결되지 않을 때(빠른전환)에 대한 bool 플래그
+	bool bQuickSwitch = false;	//카메라 위치를 빠르게 변경하라(정면 카메라, 노말 카메라 변경할때 사용)
 	
 	
 	void Start()
 	{
-		// 各参照の初期化
+        mainCamera = GetComponent<Transform>();
+		// 각 참조의 초기 설정
 		standardPos = GameObject.Find ("CamPos").transform;
 		
 		if(GameObject.Find ("FrontPos"))
@@ -29,30 +26,30 @@ public class ThirdPersonCamera : MonoBehaviour
 		if(GameObject.Find ("JumpPos"))
 			jumpPos = GameObject.Find ("JumpPos").transform;
 
-		//カメラをスタートする
+		// 카메라 시작 포지션
 			transform.position = standardPos.position;	
 			transform.forward = standardPos.forward;	
 	}
 
 	
-	void FixedUpdate ()	// このカメラ切り替えはFixedUpdate()内でないと正常に動かない
+	void FixedUpdate ()
 	{
 		
 		if(Input.GetButton("Fire1"))	// left Ctlr
 		{	
-			// Change Front Camera
+			// 전면 카메라로 변경
 			setCameraPositionFrontView();
 		}
 		
 		else if(Input.GetButton("Fire2"))	//Alt
 		{	
-			// Change Jump Camera
+			// 점프 카메라로 변경
 			setCameraPositionJumpView();
 		}
 		
 		else
 		{	
-			// return the camera to standard position and direction
+			// 카메라를 표준 위치 및 방향으로 되돌린다.
 			setCameraPositionNormalView();
 		}
 	}
@@ -60,14 +57,18 @@ public class ThirdPersonCamera : MonoBehaviour
 	void setCameraPositionNormalView()
 	{
 		if(bQuickSwitch == false){
-		// the camera to standard position and direction
-						transform.position = Vector3.Lerp(transform.position, standardPos.position, Time.fixedDeltaTime * smooth);	
-						transform.forward = Vector3.Lerp(transform.forward, standardPos.forward, Time.fixedDeltaTime * smooth);
-		}
+		// 표준 위치와 방향으로 카메라를 부드럽게 움직인다.
+			transform.position = Vector3.Lerp(transform.position, standardPos.position, Time.fixedDeltaTime * smooth);	
+			transform.forward = Vector3.Lerp(transform.forward, standardPos.forward, Time.fixedDeltaTime * smooth);
+            mainCamera.rotation = Quaternion.Slerp(prevRot, standardPos.rotation, Time.deltaTime * 0.5f);
+            prevRot = standardPos.rotation;
+        }
 		else{
-			// the camera to standard position and direction / Quick Change
+			// 표준 위치와 방향으로 카메라를 빠르게 움직인다.
 			transform.position = standardPos.position;	
 			transform.forward = standardPos.forward;
+            mainCamera.rotation = Quaternion.Slerp(prevRot, standardPos.rotation, Time.deltaTime * 0.5f);
+            prevRot = standardPos.rotation;
 			bQuickSwitch = false;
 		}
 	}
@@ -75,7 +76,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	
 	void setCameraPositionFrontView()
 	{
-		// Change Front Camera
+		// 정면 카메라로 전환
 		bQuickSwitch = true;
 		transform.position = frontPos.position;	
 		transform.forward = frontPos.forward;
@@ -83,7 +84,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
 	void setCameraPositionJumpView()
 	{
-		// Change Jump Camera
+		// 점프 카메라로 전환
 		bQuickSwitch = false;
 				transform.position = Vector3.Lerp(transform.position, jumpPos.position, Time.fixedDeltaTime * smooth);	
 				transform.forward = Vector3.Lerp(transform.forward, jumpPos.forward, Time.fixedDeltaTime * smooth);		

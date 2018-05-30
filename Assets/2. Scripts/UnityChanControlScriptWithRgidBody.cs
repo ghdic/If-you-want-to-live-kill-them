@@ -1,190 +1,226 @@
-﻿//
-// Mecanimのアニメーションデータが、原点で移動しない場合の Rigidbody付きコントローラ
-// サンプル
-// 2014/03/13 N.Kobyasahi
-//
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-// 必要なコンポーネントの列記
+using UnityEngine.UI;
+
+// 필요한 구성요소의 나열
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
 public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 {
-    public float animSpeed = 1.5f;              // アニメーション再生速度設定
-    public float lookSmoother = 3.0f;           // a smoothing setting for camera motion
-    public bool useCurves = true;               // Mecanimでカーブ調整を使うか設定する
-                                                // このスイッチが入っていないとカーブは使われない
-    public float useCurvesHeight = 0.5f;        // カーブ補正の有効高さ（地面をすり抜けやすい時には大きくする）
-                                                // 以下キャラクターコントローラ用パラメタ
-                                                // 前進速度
-    public float forwardSpeed = 7.0f;
-    // 後退速度
-    public float backwardSpeed = 2.0f;
-    // 旋回速度
-    public float rotateSpeed = 2.0f;
-    // ジャンプ威力
-    public float jumpPower = 3.0f;
-    // キャラクターコントローラ（カプセルコライダ）の参照
-    private CapsuleCollider col;
+    public float animSpeed = 1.5f;              // 애니메이션 재생 속도 설정
+    public float lookSmoother = 3.0f;           // 카메라 움직임을 부드럽게하는 설정
+    public bool useCurves = true;               // Mecanim 커브 조정을 사용하거나 설정하기
+                                                // 이 스위치가 켜져 있지 않으면 곡선은 사용되지 않는다.
+    public float useCurvesHeight = 0.5f;        // 커브 보정의 유효 높이 (땅을 빠져나가기 쉬울때는 확대)
+                                                // 다음 캐릭터 컨트롤러 매개 변수            
+    public float forwardSpeed = 7.0f;           // 전진속도
+    public float backwardSpeed = 4.0f;          // 후진속도
+    public float rotateSpeed = 2.0f;            // 회전속도
+    public float jumpPower = 3.0f;              // 점프위력
+    private CapsuleCollider col;                // 캐릭터 충돌 컨트롤러
     private Rigidbody rb;
-    // キャラクターコントローラ（カプセルコライダ）の移動量
-    private Vector3 velocity;
-    // CapsuleColliderで設定されているコライダのHeiht、Centerの初期値を収める変数
+    private Vector3 velocity;                   // 캐릭터 충돌 컨트롤러의 이동량
+
+    // CapsuleCollider로 설정 되어 있는 코라이다의 Height, Center의 초깃값을 담을 변수
     private float orgColHight;
     private Vector3 orgVectColCenter;
-    private Animator anim;                          // キャラにアタッチされるアニメーターへの参照
-    private AnimatorStateInfo currentBaseState;         // base layerで使われる、アニメーターの現在の状態の参照
-    private GameObject cameraObject;    // メインカメラへの参照
-    // アニメーター各ステートへの参照
+    private Animator anim;                          // 캐릭터에 연결된 애니메이터에 대한 참조
+    private AnimatorStateInfo currentBaseState;         // base layer에서 사용되는 애니메이터 현재 상태를 참조
+    private GameObject cameraObject;    // 메인 카메라에 대한 참조
+
+    // 애니메이터 각 상태에 대한 참조
     static int idleState = Animator.StringToHash("Base Layer.Idle");
     static int locoState = Animator.StringToHash("Base Layer.Locomotion");
     static int jumpState = Animator.StringToHash("Base Layer.Jump");
     static int restState = Animator.StringToHash("Base Layer.Rest");
-    // 初期化
+
+    //Player의 생명 변수
+    public int hp = 100;
+    //Player의 생명 초깃값
+    private int initHp;
+    //Player의 Health bar 이미지
+    public Image imgHpbar;
+    //델리게이트 및 이벤트 선언
+    public delegate void PlayerDieHandler();
+    public static event PlayerDieHandler OnPlayerDie;
+    //게임 매니저에 접근하기 위한 변수
+    //private GameMgr gameMgr;
+    //마우스 위아래로 움직일때 카메라 rotate 위아래로 하기위한 CamPos
+    public Transform standardPos;
+
     void Start()
     {
-        // Animatorコンポーネントを取得する
+        // Animator 구성 요소를 얻음
         anim = GetComponent<Animator>();
-        // CapsuleColliderコンポーネントを取得する（カプセル型コリジョン）
+        // CapsuleCollider 구성 요소를 얻음
         col = GetComponent<CapsuleCollider>();
         rb = GetComponent<Rigidbody>();
-        //メインカメラを取得する
+        // 메인 카메라 게임 오브젝트를 얻음
         cameraObject = GameObject.FindWithTag("MainCamera");
-        // CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
+        // CapsuleCollider 구성 요소의 Height, Center의 초깃값을 저장한다.
         orgColHight = col.height;
         orgVectColCenter = col.center;
+
+        //생명 초깃값 설정
+        initHp = hp;
+
+        //마우스커서 숨기기, 커서 움직이지 않게함
+        Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
+        Cursor.visible = false; //마우스 커서 보이기
     }
-    // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
+    
     void FixedUpdate()
     {
-        float h = Input.GetAxis("Horizontal");              // 入力デバイスの水平軸をhで定義
-        float v = Input.GetAxis("Vertical");                // 入力デバイスの垂直軸をvで定義
-        anim.SetFloat("Speed", v);                          // Animator側で設定している"Speed"パラメタにvを渡す
-        anim.SetFloat("Direction", h);                      // Animator側で設定している"Direction"パラメタにhを渡す
-        anim.speed = animSpeed;                             // Animatorのモーション再生速度に animSpeedを設定する
-        currentBaseState = anim.GetCurrentAnimatorStateInfo(0); // 参照用のステート変数にBase Layer (0)の現在のステートを設定する
-        rb.useGravity = true;//ジャンプ中に重力を切るので、それ以外は重力の影響を受けるようにする
-        // 以下、キャラクターの移動処理
-        velocity = new Vector3(0, 0, v);        // 上下のキー入力からZ軸方向の移動量を取得
-                                                // キャラクターのローカル空間での方向に変換
+        float h = Input.GetAxis("Horizontal");              // 수평입력 값을 h라고 정의
+        float v = Input.GetAxis("Vertical");                // 수직입력 값을 v라고 정의
+        anim.SetFloat("Speed", v);                          // Animator 측에서 설정하고있는 Speed매개 변수에 v를 전달
+        anim.SetFloat("Direction", h);                      // Animator 측에서 설정한 Direction 매개 변수에 h를 전달
+        anim.speed = animSpeed;                             // Animator의 모션 재생 속도에 animSpeed를 설정
+        currentBaseState = anim.GetCurrentAnimatorStateInfo(0); // 참조용 상태 변수 Base Layer(0)의 현재 상태를 설정
+        rb.useGravity = true;//점프 중에 일정 시간 중력의 영향을 받지 않게 한다.
+        // --- 캐릭터 이동 처리 ---
+        velocity = new Vector3(0, 0, v);        // 상하 키 입력에서 Z축 방향의 이동량을 취득
+                                                // 캐릭터의 로컬 공간에서 방향으로 변환
         velocity = transform.TransformDirection(velocity);
-        //以下のvの閾値は、Mecanim側のトランジションと一緒に調整する
+        //다음 v 임계 값은 Mecanim 측의 전환과 함께 조정
         if (v > 0.1)
         {
-            velocity *= forwardSpeed;       // 移動速度を掛ける
+            velocity *= forwardSpeed;       // 전진 이동속도를 곱한다.
         }
         else if (v < -0.1)
         {
-            velocity *= backwardSpeed;  // 移動速度を掛ける
+            velocity *= backwardSpeed;  // 후퇴 이동속도를 곱한다.
         }
+        // 스페이스바를 입력할 경우
         if (Input.GetButtonDown("Jump"))
-        {   // スペースキーを入力したら
-            //アニメーションのステートがLocomotionの最中のみジャンプできる
-            if (currentBaseState.nameHash == locoState)
+        {   
+            //애니메이션 상태가 Locomotion 중일 경우
+            if (currentBaseState.fullPathHash == locoState)
             {
-                //ステート遷移中でなかったらジャンプできる
+                //애니메이션이 종료가 되면
                 if (!anim.IsInTransition(0))
                 {
+                    //위쪽으로 물리적 힘을 가한다.
                     rb.AddForce(Vector3.up * jumpPower, ForceMode.VelocityChange);
-                    anim.SetBool("Jump", true);     // Animatorにジャンプに切り替えるフラグを送る
+                    anim.SetBool("Jump", true);     // Animator을 점프로 전환
                 }
             }
         }
-        // 上下のキー入力でキャラクターを移動させる
+        // 상하 키 입력으로 캐릭터를 이동시킨다.
         transform.localPosition += velocity * Time.fixedDeltaTime;
-        // 左右のキー入力でキャラクタをY軸で旋回させる
+        // 좌우의 키 입력으로 문자 Y축으로 회전시킨다.
         transform.Rotate(0, h * rotateSpeed, 0);
-        // 以下、Animatorの各ステート中での処理
-        // Locomotion中
-        // 現在のベースレイヤーがlocoStateの時
-        if (currentBaseState.nameHash == locoState)
+
+        // --- Animator의 각 상태에서의 처리 ---
+        // Locomotion 중일때 처리
+        if (currentBaseState.fullPathHash == locoState)
         {
-            //カーブでコライダ調整をしている時は、念のためにリセットする
+            //곡선 collider 조정을 하고 있을때는 안전을 위해 재설정
             if (useCurves)
             {
                 resetCollider();
             }
         }
-        // JUMP中の処理
-        // 現在のベースレイヤーがjumpStateの時
-        else if (currentBaseState.nameHash == jumpState)
+        // JUMP 중일때 처리
+        else if (currentBaseState.fullPathHash == jumpState)
         {
-            cameraObject.SendMessage("setCameraPositionJumpView");  // ジャンプ中のカメラに変更
-                                                                    // ステートがトランジション中でない場合
+            cameraObject.SendMessage("setCameraPositionJumpView");  // 메인 카메라의 JumpView 함수 호출
+            // 상태가 전환되고 있지 않는 경우
             if (!anim.IsInTransition(0))
             {
-                // 以下、カーブ調整をする場合の処理
+                // 커브 조정을 하는 경우의 처리
                 if (useCurves)
                 {
-                    // 以下JUMP00アニメーションについているカーブJumpHeightとGravityControl
-                    // JumpHeight:JUMP00でのジャンプの高さ（0〜1）
-                    // GravityControl:1⇒ジャンプ中（重力無効）、0⇒重力有効
+                    // JUMP00 애니메이션에 붙어 있는 JumpHeight와 GravityControl
+                    // JumpHeight:JUMP00에서 점프의 높이（0〜1）
+                    // GravityControl:1⇒점프 중(중력 비활성), 0⇒중력 활성화
                     float jumpHeight = anim.GetFloat("JumpHeight");
                     float gravityControl = anim.GetFloat("GravityControl");
                     if (gravityControl > 0)
-                        rb.useGravity = false;  //ジャンプ中の重力の影響を切る
-                    // レイキャストをキャラクターのセンターから落とす
+                        rb.useGravity = false;  //점프 중 중력의 영향을 없앤다.
+                    // Ray Casting 캐릭터의 센터에서 떨어뜨린다.
                     Ray ray = new Ray(transform.position + Vector3.up, -Vector3.up);
                     RaycastHit hitInfo = new RaycastHit();
-                    // 高さが useCurvesHeight 以上ある時のみ、コライダーの高さと中心をJUMP00アニメーションについているカーブで調整する
+                    // 높이가 useCurvesHeight 이상인 경우에만 Collider의 
+                    //높이와 중심을 JUMP00 애니메이션에 붙어있는 곡선조정
                     if (Physics.Raycast(ray, out hitInfo))
                     {
                         if (hitInfo.distance > useCurvesHeight)
                         {
-                            col.height = orgColHight - jumpHeight;          // 調整されたコライダーの高さ
+                            col.height = orgColHight - jumpHeight;          // 조정된 collider의 높이
                             float adjCenterY = orgVectColCenter.y + jumpHeight;
-                            col.center = new Vector3(0, adjCenterY, 0); // 調整されたコライダーのセンター
+                            col.center = new Vector3(0, adjCenterY, 0); // 조정된 collider의 센터
                         }
                         else
                         {
-                            // 閾値よりも低い時には初期値に戻す（念のため）					
+                            // 임계 값보다 낮은 경우에는 초기값으로 복원(만약을 위해)
                             resetCollider();
                         }
                     }
                 }
-                // Jump bool値をリセットする（ループしないようにする）				
+                // Jump bool값을 재설정(루프하지 않도록 한다)
                 anim.SetBool("Jump", false);
             }
         }
-        // IDLE中の処理
-        // 現在のベースレイヤーがidleStateの時
-        else if (currentBaseState.nameHash == idleState)
+        // IDLE 중일때 처리
+        else if (currentBaseState.fullPathHash == idleState)
         {
-            //カーブでコライダ調整をしている時は、念のためにリセットする
+            //곡선 Collider 조정을 하고 있을때는 안전을 위해 재설정
             if (useCurves)
             {
                 resetCollider();
             }
-            // スペースキーを入力したらRest状態になる
+            // 스페이스 키를 입력하면 Rest 상태로
             if (Input.GetButtonDown("Jump"))
             {
                 anim.SetBool("Rest", true);
             }
         }
-        // REST中の処理
-        // 現在のベースレイヤーがrestStateの時
-        else if (currentBaseState.nameHash == restState)
+        // REST 중일때 처리
+        else if (currentBaseState.fullPathHash == restState)
         {
-            //cameraObject.SendMessage("setCameraPositionFrontView");		// カメラを正面に切り替える
-            // ステートが遷移中でない場合、Rest bool値をリセットする（ループしないようにする）
+            cameraObject.SendMessage("setCameraPositionFrontView");		// 카메라를 정면으로 전환
+            // 상태가 전환되고 있지 않은 경우, Rest bool 값을 재설정(루프하지 않도록한다.)
             if (!anim.IsInTransition(0))
             {
                 anim.SetBool("Rest", false);
             }
         }
+        // 이외 모션중일때(Shift누를 때) 카메라를 정면으로 바꾼다.
+        else
+        {
+            cameraObject.SendMessage("setCameraPositionFrontView");		// 카메라를 정면으로 전환
+        }
+        // --- 랜덤 모션에 실행하기 ---
+        //움직이면 모션이 캔슬됨
         if (h != 0 || v != 0)
             anim.SetTrigger("MotionCancel");
-        if (Input.GetButtonDown("Motion"))
+
+        //왼쪽 Shift누르면 랜덤으로 모션 실행
+        if (Input.GetButtonDown("Motion"))  //Fire3 -> Motion (왼쪽 Shift키) 
         {
-            anim.SetInteger("RandomMotion", Random.Range(1, 15));
+            
+            anim.SetInteger("RandomMotion", Random.Range(1, 17));
             anim.SetTrigger("Motion");
         }
+        
+        // --- 캐릭터 children의 rotaion 처리 ---
+        //마우스 위 아래로 움직일때 CamPos Rotation 처리
+        float MouseRot = Input.GetAxis("Mouse Y");
+        if (MouseRot>0 && standardPos.rotation.x >= -0.3f)
+        {
+            standardPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+        }
+        else if(MouseRot<0 && standardPos.rotation.x <= 0.3f)
+        {
+            standardPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+        }
     }
-    // キャラクターのコライダーサイズのリセット関数
+    // 캐릭터 collider 크기 재설정 함수
     void resetCollider()
     {
-        // コンポーネントのHeight、Centerの初期値を戻す
+        // 구성 요소의 Height, Center의 초기값을 리턴
         col.height = orgColHight;
         col.center = orgVectColCenter;
     }
