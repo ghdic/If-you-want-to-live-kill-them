@@ -59,34 +59,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2. Scripts\PlayerAttackCtrl.cs" />
     <Compile Include="Assets\2. Scripts\ThirdPersonCamera.cs" />
     <Compile Include="Assets\2. Scripts\UnityChanControlScriptWithRgidBody.cs" />
     <Compile Include="Assets\5. Models\UnityChan\Scripts\CameraController.cs" />
     <Compile Include="Assets\5. Models\UnityChan\Scripts\FaceUpdate.cs" />
     <Compile Include="Assets\5. Models\UnityChan\Scripts\IdleChanger.cs" />
     <Compile Include="Assets\5. Models\UnityChan\Scripts\SceneLoader.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Demo\DemoScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Demo\DemoScriptEditor.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\FireBaseScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\FireCollisionForwardScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\FireConstantBaseScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\FireLightScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\FireProjectileScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\MeteorSwarmScript.cs" />
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Script\SingleLineAttribute.cs" />
+    <Compile Include="Assets\6. Effect\_Creepy_Cat\3D Games Effects Pack Free\Example_02\InstanceExample.cs" />
+    <Compile Include="Assets\6. Effect\25가지 이쁜 이펙트\Magic_Particle_Effects\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Demo\DemoScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Demo\DemoScriptEditor.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\FireBaseScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\FireCollisionForwardScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\FireConstantBaseScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\FireLightScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\FireProjectileScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\MeteorSwarmScript.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\SingleLineAttribute.cs" />
+    <Compile Include="Assets\7. Animation\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
-    <None Include="Assets\6. Effect\PyroParticles\Prefab\Materials\AdditiveTintable.shader" />
+    <None Include="Assets\6. Effect\_Creepy_Cat\3D Games Effects Pack Free\Example_02\Help Readme SOS.txt" />
+    <None Include="Assets\6. Effect\각종 불 마법들\Prefab\Materials\AdditiveTintable.shader" />
     <None Include="Assets\5. Models\UnityChan\license.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
-    <None Include="Assets\6. Effect\PyroParticles\Readme.txt" />
+    <None Include="Assets\6. Effect\각종 불 마법들\Readme.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+    <None Include="Assets\6. Effect\25가지 이쁜 이펙트\Magic_Particle_Effects\Readme.txt" />
     <None Include="Assets\5. Models\UnityChan\Stage\Shader\AlphaMask.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+    <None Include="Assets\6. Effect\_Creepy_Cat\3D Games Effects Pack Free\_FAQ - Informations\Help Readme SOS.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/github/If you want to live, kill them/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

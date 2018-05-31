@@ -17,7 +17,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     public float forwardSpeed = 7.0f;           // 전진속도
     public float backwardSpeed = 4.0f;          // 후진속도
     public float rotateSpeed = 2.0f;            // 회전속도
-    public float jumpPower = 3.0f;              // 점프위력
+    public float jumpPower = 1.0f;              // 점프위력
     private CapsuleCollider col;                // 캐릭터 충돌 컨트롤러
     private Rigidbody rb;
     private Vector3 velocity;                   // 캐릭터 충돌 컨트롤러의 이동량
@@ -47,7 +47,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     //게임 매니저에 접근하기 위한 변수
     //private GameMgr gameMgr;
     //마우스 위아래로 움직일때 카메라 rotate 위아래로 하기위한 CamPos
-    public Transform standardPos;
+    private Transform standardPos;
 
     void Start()
     {
@@ -58,6 +58,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         // 메인 카메라 게임 오브젝트를 얻음
         cameraObject = GameObject.FindWithTag("MainCamera");
+        //standardPos Trasnform을 얻음
+        standardPos = GameObject.Find("CamPos").transform;
         // CapsuleCollider 구성 요소의 Height, Center의 초깃값을 저장한다.
         orgColHight = col.height;
         orgVectColCenter = col.center;
@@ -66,8 +68,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         initHp = hp;
 
         //마우스커서 숨기기, 커서 움직이지 않게함
-        Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
-        Cursor.visible = false; //마우스 커서 보이기
+        //Cursor.lockState = CursorLockMode.Locked;//마우스 커서 고정
+        //Cursor.visible = false; //마우스 커서 보이기
     }
     
     void FixedUpdate()
@@ -197,8 +199,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         if (h != 0 || v != 0)
             anim.SetTrigger("MotionCancel");
 
-        //왼쪽 Shift누르면 랜덤으로 모션 실행
-        if (Input.GetButtonDown("Motion"))  //Fire3 -> Motion (왼쪽 Shift키) 
+        //랜덤으로 모션 실행
+        if (Input.GetKeyDown(KeyCode.K))  // K
         {
             
             anim.SetInteger("RandomMotion", Random.Range(1, 17));
@@ -217,6 +219,9 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
             standardPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
         }
     }
+
+    
+
     // 캐릭터 collider 크기 재설정 함수
     void resetCollider()
     {

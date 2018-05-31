@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\6. Effect\PyroParticles\Prefab\Editor\PyroParticlesEditor.cs" />
+    <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Editor\PyroParticlesEditor.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/github/If you want to live, kill them/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
