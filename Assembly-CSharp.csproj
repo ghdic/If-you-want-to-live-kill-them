@@ -59,6 +59,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2. Scripts\AttachWeapon.cs" />
+    <Compile Include="Assets\2. Scripts\GameMgr.cs" />
+    <Compile Include="Assets\2. Scripts\GameUI.cs" />
+    <Compile Include="Assets\2. Scripts\GrenadeCtrl.cs" />
+    <Compile Include="Assets\2. Scripts\MonsterCtrl.cs" />
     <Compile Include="Assets\2. Scripts\PlayerAttackCtrl.cs" />
     <Compile Include="Assets\2. Scripts\ThirdPersonCamera.cs" />
     <Compile Include="Assets\2. Scripts\UnityChanControlScriptWithRgidBody.cs" />
@@ -68,6 +73,22 @@
     <Compile Include="Assets\5. Models\UnityChan\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\6. Effect\_Creepy_Cat\3D Games Effects Pack Free\Example_02\InstanceExample.cs" />
     <Compile Include="Assets\6. Effect\25가지 이쁜 이펙트\Magic_Particle_Effects\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\6. Effect\KY magic effect\Script\ConGUI.cs" />
+    <Compile Include="Assets\6. Effect\KY magic effect\Script\Lighting.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\WFX_Demo.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\WFX_Demo_DeleteAfterDelay.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\WFX_Demo_New.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\WFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Demo\Assets\WFX_Demo_Wall.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Scripts\CFX_LightIntensityFade.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Scripts\WFX_BulletHoleDecal.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Scripts\WFX_LightFlicker.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Spawn System\CFX_SpawnSystem.cs" />
     <Compile Include="Assets\6. Effect\각종 불 마법들\Demo\DemoScript.cs" />
     <Compile Include="Assets\6. Effect\각종 불 마법들\Demo\DemoScriptEditor.cs" />
     <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\FireBaseScript.cs" />
@@ -78,23 +99,52 @@
     <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\MeteorSwarmScript.cs" />
     <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Script\SingleLineAttribute.cs" />
     <Compile Include="Assets\7. Animation\Mixamo\Magic Pack\Demo\CameraScroll.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Application\AssetResourcesFile.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Application\CameraCompatibilityUtility.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Application\TimelineClipWrapper.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Application\VersionCompatibilityUtility.cs" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S AlphaBlend Scroll.shader" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\UnlitDashedLine.shader" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\VertexColorUnlit.shader" />
+    <None Include="Assets\10. Sound\mai_free_voices\mai_free_voices.txt" />
     <None Include="Assets\6. Effect\_Creepy_Cat\3D Games Effects Pack Free\Example_02\Help Readme SOS.txt" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\ColorUnlitTransparent.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Particle AddSoft A8.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Alpha-Specular TintColor.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S AlphaBlend NoSoftParticles.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\_Effects\MuzzleFlashes\!MuzzleFlash Differences.txt" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Smoke Scroll.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Add Scroll.shader" />
     <None Include="Assets\6. Effect\각종 불 마법들\Prefab\Materials\AdditiveTintable.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\!WarFX Readme.txt" />
     <None Include="Assets\5. Models\UnityChan\license.txt" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\UnlitLine.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\ColorUnlit.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Particle Add A8.shader" />
+    <None Include="Assets\6. Effect\War FX\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
+    <None Include="Assets\6. Effect\War FX\WarFX\_Effects (Mobile)\MuzzleFlashes\!MuzzleFlash Differences.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+    <None Include="Assets\6. Effect\KY magic effect\MagicEffectsPackFree\ReadMe.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
+    <None Include="Assets\6. Effect\War FX\!JMO Assets Readme.txt" />
     <None Include="Assets\6. Effect\각종 불 마법들\Readme.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Multiply Soft Scroll.shader" />
     <None Include="Assets\6. Effect\25가지 이쁜 이펙트\Magic_Particle_Effects\Readme.txt" />
     <None Include="Assets\5. Models\UnityChan\Stage\Shader\AlphaMask.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Particle Multiply A8.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Multiply Soft.shader" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\WiresOnly.shader" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
     <None Include="Assets\6. Effect\_Creepy_Cat\3D Games Effects Pack Free\_FAQ - Informations\Help Readme SOS.txt" />
     <None Include="Assets\5. Models\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
+    <None Include="Assets\6. Effect\War FX\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
+    <None Include="Assets\Editor Default Resources\UMotionEditor\Shaders\CameraLit.shader" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/github/If you want to live, kill them/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -304,6 +354,9 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/User/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="UMotionApplication">
+      <HintPath>D:/github/If you want to live, kill them/Assets/Editor Default Resources/UMotionEditor/Plugins/Application/UMotionApplication.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>

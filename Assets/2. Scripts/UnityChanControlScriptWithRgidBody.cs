@@ -48,6 +48,8 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
     //private GameMgr gameMgr;
     //마우스 위아래로 움직일때 카메라 rotate 위아래로 하기위한 CamPos
     private Transform standardPos;
+    public Transform magicCircle;
+    public Transform throwPos;
 
     void Start()
     {
@@ -213,10 +215,15 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
         if (MouseRot>0 && standardPos.rotation.x >= -0.3f)
         {
             standardPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+            magicCircle.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+            throwPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+
         }
         else if(MouseRot<0 && standardPos.rotation.x <= 0.3f)
         {
             standardPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+            magicCircle.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
+            throwPos.Rotate(Vector3.left * Time.deltaTime * 30.0f * MouseRot);
         }
     }
 

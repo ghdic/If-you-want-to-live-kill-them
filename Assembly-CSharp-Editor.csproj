@@ -59,7 +59,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\6. Effect\War FX\Cartoon FX Easy Editor\Editor\CFXEasyEditor.cs" />
+    <Compile Include="Assets\6. Effect\War FX\WarFX\Editor\CFX_SpawnSystemEditor.cs" />
     <Compile Include="Assets\6. Effect\각종 불 마법들\Prefab\Editor\PyroParticlesEditor.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\AnimationCurveUtilityRecent.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\AnimatorUtility.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\GUICompatibilityUtility.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\HandlesUtility.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\ParticlesUtility.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\PlayModeUtility.cs" />
+    <Compile Include="Assets\Editor Default Resources\UMotionEditor\Scripts\Editor\TextEditorUtility.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>D:/github/If you want to live, kill them/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
@@ -323,6 +332,15 @@
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="JMOAssets">
+      <HintPath>D:/github/If you want to live, kill them/Assets/6. Effect/War FX/Editor/JMOAssets.dll</HintPath>
+    </Reference>
+    <Reference Include="UMotionEditor">
+      <HintPath>D:/github/If you want to live, kill them/Assets/Editor Default Resources/UMotionEditor/Plugins/Editor/UMotionEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UMotionApplication">
+      <HintPath>D:/github/If you want to live, kill them/Assets/Editor Default Resources/UMotionEditor/Plugins/Application/UMotionApplication.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Unity/Editor/Data/MonoBleedingEdge/lib/mono/2.0-api/mscorlib.dll</HintPath>

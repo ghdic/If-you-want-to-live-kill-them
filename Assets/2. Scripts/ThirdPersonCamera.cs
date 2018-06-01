@@ -2,7 +2,7 @@
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    public float smooth = 3.0f;		// 카메라 모션 부드럽게하기용 변수
+    public float smooth = 5.0f;		// 카메라 모션 부드럽게하기용 변수
     private Transform mainCamera;
     private Transform standardPos;          // 카메라의 일반적인 위치
     private Transform frontPos;         // 카메라 전면 탐지기
@@ -28,7 +28,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private Quaternion originalRotation;
 
     //카메라 줌 인/아웃
-    public float zoomSpeed = 5.0f; // 줌 스피드
+    public float zoomSpeed = 0.5f; // 줌 스피드
     private float distance; // 카메라와의 거리
     private Vector3 AxisVec; //축의 벡터
 
@@ -71,9 +71,10 @@ public class ThirdPersonCamera : MonoBehaviour
 
         // 카메라를 표준 위치 및 방향으로 되돌린다.
         setCameraPositionNormalView();
-        // 마우스 움직임 설정, 마우스 줌인도 가능
+        // 마우스 움직임 설정
         UpdateMouseLook();
-        
+        // 마우스 휠 줌/아웃
+        zoomInZoomOut();
 
         // === 단축키 처리 ===
         //마우스 움직일때 카메라 회전 켜기/닫기
@@ -122,15 +123,12 @@ public class ThirdPersonCamera : MonoBehaviour
         //마우스 고정시킬때
         if (mouseLock)
         {
-            mainCamera.rotation = Quaternion.Slerp(prevRot, standardPos.rotation, Time.deltaTime * 0.5f);
+            mainCamera.rotation = Quaternion.Slerp(prevRot, standardPos.rotation, Time.deltaTime * smooth);
             prevRot = standardPos.rotation;
         }
         //마우스 고정해제일때
         else
         {
-            // 마우스 휠 줌/아웃
-            zoomInZoomOut();
-
             if (axes == RotationAxes.MouseXAndY)
             {
                 // Read the mouse input axis
@@ -162,9 +160,10 @@ public class ThirdPersonCamera : MonoBehaviour
                 transform.localRotation = originalRotation * yQuaternion;
             }
 
+            //움직일 경우 화면 회전 초기화
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
-                transform.rotation = Quaternion.Slerp(prevRot, standardPos.rotation, Time.deltaTime * 0.5f);
+                transform.rotation = Quaternion.Slerp(prevRot, standardPos.rotation, Time.deltaTime * smooth);
                 prevRot = standardPos.rotation;
                 originalRotation = transform.localRotation;
                 rotationX = rotationY = 0;
@@ -189,7 +188,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private void zoomInZoomOut()
     {
         distance += Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * -1;
-        distance = Mathf.Clamp(distance, -0.05f, 0.5f);
+        distance = Mathf.Clamp(distance, -0.17f, 0.5f);
 
         AxisVec = standardPos.forward * -1;
         AxisVec *= distance;
